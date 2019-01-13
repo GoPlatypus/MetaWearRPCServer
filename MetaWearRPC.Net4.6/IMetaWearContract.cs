@@ -19,12 +19,13 @@ namespace MetaWearRPC
 		[TntMessage(2)]
 		byte GetBatteryLevel(ulong pMacAdress);
 
-		/// <summary>
-		/// Start pulsing a motor on the MetaWearBoard with the given mac address.
-		/// </summary>
-		/// <param name="pDurationMs">How long to run the motor, in milliseconds (ms)</param>
-		/// <param name="pIntensity">Strength of the motor [0.0f ; 100.0f]</param>
-		[TntMessage(3)]
+        /// <summary>
+        /// Start pulsing a motor on the MetaWearBoard with the given mac address.
+        /// </summary>
+        /// <param name="pMacAdress"></param>
+        /// <param name="pDurationMs">How long to run the motor, in milliseconds (ms)</param>
+        /// <param name="pIntensity">Strength of the motor [0.0f ; 100.0f]</param>
+        [TntMessage(3)]
 		void StartMotor(ulong pMacAdress, ushort pDurationMs, float pIntensity);
 
 		/// <summary>
@@ -38,11 +39,27 @@ namespace MetaWearRPC
 		[TntMessage(4)]
 		void StartMotorPattern(ulong pMacAdress, ushort pDurationMs, float pIntensity, ushort pSleepMs, int pPatternIterations);
 
-		/// <summary>
-		/// Start pulsing a buzzer on the MetaWearBoard with the given mac address.
-		/// </summary>
-		/// <param name="pDurationMs">How long to run the buzzer, in milliseconds (ms)</param>
-		[TntMessage(5)]
+        /// <summary>
+        /// Start pulsing a buzzer on the MetaWearBoard with the given mac address.
+        /// </summary>
+        /// <param name="pMacAdress"></param>
+        /// <param name="pDurationMs">How long to run the buzzer, in milliseconds (ms)</param>
+        [TntMessage(5)]
 		void StartBuzzer(ulong pMacAdress, ushort pDurationMs);
-	}
+
+        /// <summary>
+        /// Stop the led on the device
+        /// <param name="pMacAdress"></param>
+        /// </summary>
+        [TntMessage(6)]
+        void StopLED(ulong pMacAdress);
+
+        /// <summary>
+        /// Show a color on the LED on the device
+		/// <param name="pMacAdress"></param>
+		/// <param name="pColor">The color of the light, G=0, R=1, B=2 </param>
+        /// </summary>
+        [TntMessage(7)]
+        void StartLED(ulong pMacAdress, ushort pColor);
+    }
 }

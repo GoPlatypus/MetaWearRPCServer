@@ -79,6 +79,17 @@ namespace MetaWearRPC
 		{
 			_client.Contract.StartBuzzer(pMacAdress, pDurationMs);
 		}
-		#endregion
-	}
+
+        public void StopLED(ulong pMacAdress)
+        {
+            _client.Contract.StopLED(pMacAdress);
+        }
+
+        public void StartLED(ulong pMacAdress, ushort pColor)
+        {
+            _client.Contract.StartLED(pMacAdress, pColor);
+        }
+
+        #endregion
+    }
 }
