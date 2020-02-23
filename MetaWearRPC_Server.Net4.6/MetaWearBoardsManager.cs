@@ -72,6 +72,18 @@ namespace MetaWearRPC
 			_connectedMWBoards.Clear();
 		}
 
+        public string DesiredBoards()
+        {
+            string ret ="";
+
+            foreach (ulong address in _desiredMWBoards)
+            {
+                ret += Global.MacToString(address) + "\n";
+            }
+
+            return ret;
+        }
+
 		#region Private Methods
 		private void _Init(List<string> pMWBoardsMacAdresses)
 		{

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Threading;
 using TNT;
@@ -21,7 +22,26 @@ namespace MetaWearRPC
 
 			try
 			{
-				using (MetaWearBoardsManager mwBoardsManager = new MetaWearBoardsManager(args[0]))
+                string path;
+                if (args.Length > 0)
+                    path = args[0];
+                else
+                {
+                    // C: \Users\Will\AppData\LocalLow\Platypus Neuro\PlatyDemo
+
+                    path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "Low\\Platypus Neuro\\PlatyDemo";
+                    path = Path.Combine(path, "mwboards.cfg");
+                }
+
+                Console.WriteLine("[MetaWearRPC_Server] Reading boards from " + path);
+
+                // create a fake file if there isn't one there
+                if(!File.Exists(path))
+                {
+                    File.WriteAllText(path, "EC:31:87:17:9E:BD\nD6:0E:AB:0D:C3:1E\nFF:DF:FA:75:18:D5\nD2:EA:9E:58:5F:2F\n");
+                }
+
+				using (MetaWearBoardsManager mwBoardsManager = new MetaWearBoardsManager(path))
 				{
 					MetaWearContract rpcContract = new MetaWearContract(mwBoardsManager);
 
@@ -33,6 +53,7 @@ namespace MetaWearRPC
 						rpcServer.Disconnected += RpcServer_Disconnected;
 						rpcServer.IsListening = true;
 						Console.WriteLine("[MetaWearRPC_Server] Server listening to clients...");
+                        Console.WriteLine(mwBoardsManager.DesiredBoards());
 						Console.WriteLine("[MetaWearRPC_Server] Press Esc to exit...");
 
 						//Test.
